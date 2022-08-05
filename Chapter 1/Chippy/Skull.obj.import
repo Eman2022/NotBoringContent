@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Skull.obj-2c4ab0efac7146b608763c40448b464f.mesh"
+
+[deps]
+
+files=[ "res://.import/Skull.obj-2c4ab0efac7146b608763c40448b464f.mesh" ]
+
+source_file="res://Chapter 1/Chippy/Skull.obj"
+dest_files=[ "res://.import/Skull.obj-2c4ab0efac7146b608763c40448b464f.mesh", "res://.import/Skull.obj-2c4ab0efac7146b608763c40448b464f.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

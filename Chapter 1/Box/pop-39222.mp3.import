@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/pop-39222.mp3-cc78bfbf901c3d261112a2346a172a3e.mp3str"
+
+[deps]
+
+source_file="res://Chapter 1/Box/pop-39222.mp3"
+dest_files=[ "res://.import/pop-39222.mp3-cc78bfbf901c3d261112a2346a172a3e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
