@@ -2,16 +2,8 @@ extends Spatial
 
 
 
-
-# Our Main function:
 func _ready():
 	createBox(0,0,0)
-
-
-
-
-
-
 
 
 
