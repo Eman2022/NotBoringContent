@@ -58,6 +58,7 @@ _global_script_class_icons={
 
 config/name="Not Boring Content"
 run/main_scene="res://Chapter 1/World_Level_1.tscn"
+config/icon="res://Other/icon/GameIcon_310.png"
 
 [autoload]
 

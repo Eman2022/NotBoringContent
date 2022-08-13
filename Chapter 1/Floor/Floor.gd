@@ -11,7 +11,7 @@ func _on_body_entered(body):
 		body.queue_free()
 
 
-func _on_input_event(camera, event, position, normal, shape_idx):
+func _on_input_event(_camera, event, position, _normal, _shape_idx):
 	if event is InputEventMouseMotion:
 		worldNode.mousePositionUpdated(position)
 	elif event is InputEventMouseButton:

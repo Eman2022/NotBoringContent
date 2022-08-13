@@ -6,9 +6,7 @@ var timer : Timer
 var player : FreelookCamera
 
 func _ready():
-
 	self.timer = $Timer
-	var c1 : Viewport = get_child(0)
 	findCamera()
 
 func updateText(text : String, pos : Vector3, seconds : float = 7.0):

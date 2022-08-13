@@ -34,21 +34,21 @@ var data : Dictionary = {}
 
 
 func _init():
-	meshOffset = Vector3(rand_range(0.0,1.0),rand_range(0.0,1.0),0.0)
+#	meshOffset = Vector3(rand_range(0.0,1.0),rand_range(0.0,1.0),0.0)
 	setCanOpen(_canOpen)
 
 
 
 func _ready():
 	worldNode = get_parent()
-	var mesh : MeshInstance = get_child(0)
-	var sm : SpatialMaterial = mesh.get_surface_material(0)
-	sm.uv1_offset = meshOffset
+#	var mesh : MeshInstance = get_child(0)
+#	var sm : SpatialMaterial = mesh.get_surface_material(0)
+#	sm.uv1_offset = meshOffset
 	if _autoPopTime > -1:
 		createSetPopTimer()
 
 
-func _on_input_event(camera, event, position, normal, shape_idx):
+func _on_input_event(_camera, event, position, _normal, _shape_idx):
 	if event is InputEventMouseButton:
 		if !event.pressed:
 			popOpenBox()
@@ -64,11 +64,11 @@ func popOpenBox():
 		var p = get_parent()
 		
 		spawnBoxSide(1, 2)
-		spawnBoxSide(2, 3, Vector3(0,1.5,0))
-		spawnBoxSide(3, 4, Vector3(0,1.5,0))
-		spawnBoxSide(4, 5, Vector3(0,1.5,0))
-		spawnBoxSide(5, 6, Vector3(0,1.5,0))
-		spawnBoxSide(6, 7, Vector3(0,1.5,0))
+		spawnBoxSide(2, 3)
+		spawnBoxSide(3, 4)
+		spawnBoxSide(4, 5)
+		spawnBoxSide(5, 6)
+		spawnBoxSide(6, 7)
 		
 		for obj in _contents:
 			p.add_child(obj)
@@ -87,8 +87,8 @@ func popOpenBox():
 		
 		self.queue_free()
 
-func spawnBoxSide(spot : int, child : int, uvOffset : Vector3 = Vector3(0,0,0)):
-	var p : Vector3 = self.translation
+func spawnBoxSide(spot : int, child : int):
+
 	var boxSide = boxSidesFile.instance()
 	
 	var boxMesh : MeshInstance = boxSide.get_node("MeshInstance")
@@ -227,15 +227,7 @@ func figureGravityScale():
 	else:
 		if _parentBox:
 			_parentBox.figureGravityScale()
-#		var upperParent = _parentBox
-#		var i = 0
-#		while(!upperParent.is_inside_tree()):
-#			i += 1
-#			upperParent = _parentBox._parentBox
-#			if upperParent.get_parent():
-#				break
-#		upperParent.figureGravityScale()
-		
+
 
 
 func chippyHasDied():
@@ -308,7 +300,7 @@ func pushInstanceIntoBox(newThing) -> bool:
 		_contents.push_back(newThing)
 		return true
 	else:
-		print(name + " didn't have enough space for " + newThing.name)
+		print("Warning: " + name + " didn't have enough space for " + newThing.name)
 		return false
 
 func getVolume():
@@ -325,7 +317,6 @@ func addBoxtoBox() -> Box:
 	var bxInst = bxPath.instance()
 	var boxPlaced = false
 	if containsObjectOtherThanBoxes():
-		print(boxName + " has something besides boxes")
 		if pushInstanceIntoBox(bxInst):
 			boxPlaced = true
 	else:

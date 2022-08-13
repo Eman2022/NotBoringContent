@@ -26,7 +26,7 @@ environment = SubResource( 2 )
 [node name="Camera" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 0.983606, 0.18033, 0, -0.18033, 0.983606, 0, 5, 17.2721 )
 current = true
-sensitivity = 0.7
+sensitivity = 0.09
 
 [node name="Floor" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
@@ -45,9 +45,6 @@ margin_left = -96.0
 margin_top = -28.0
 margin_right = 99.0
 color = Color( 1, 0.984314, 0, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Text3D" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.04817, 0 )
