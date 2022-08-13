@@ -1,7 +1,7 @@
 extends Spatial
 
 
-
+# our main function
 func _ready():
 	createBox(0,0,0)
 
