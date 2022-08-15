@@ -3,8 +3,11 @@ class_name Box extends RigidBody
 var boxSidesFile = preload("res://Chapter 1/Box/BoxSide.tscn")
 
 signal oxygenChanged(oxygenAmount)
-
 signal boxPopping(data)
+signal symbolChanged(t)
+signal labelChanged(t)
+signal symbolColorChanged(c)
+signal labelColorChanged(c)
 
 var meshOffset : Vector3
 var _contents : Array 
@@ -32,18 +35,14 @@ var _parentBox
 var lastAddBoxVolume : float = 0
 var data : Dictionary = {}
 
+var _symbolSet := false
+var _labelSet := false
 
 func _init():
-#	meshOffset = Vector3(rand_range(0.0,1.0),rand_range(0.0,1.0),0.0)
 	setCanOpen(_canOpen)
-
-
 
 func _ready():
 	worldNode = get_parent()
-#	var mesh : MeshInstance = get_child(0)
-#	var sm : SpatialMaterial = mesh.get_surface_material(0)
-#	sm.uv1_offset = meshOffset
 	if _autoPopTime > -1:
 		createSetPopTimer()
 
@@ -103,11 +102,30 @@ func spawnBoxSide(spot : int, child : int):
 	boxSide.transform = spotChild.get_global_transform()
 	if spot == 2 or spot == 4:
 		boxSide.rotation_degrees.y += 90
+		if spotChild.get_child_count() > 0:
+			var c = spotChild.get_child(0)
+			spotChild.remove_child(c)
+			boxSide.add_child(c)
+			c.rotation_degrees.y -= 90
+			if spot == 2:
+				c.translation.z -= .06
+			else:
+				c.translation.z += .06
 	elif spot == 5 or spot == 6:
 		boxSide.rotation_degrees.x += 90
 		boxSide.scale = Vector3(0.8,0.8,1.0)
-	elif spot == 3:
-		boxSide.rotation_degrees.y += 180
+	elif spot == 3 or spot == 1:
+		if spot == 3:
+			boxSide.rotation_degrees.y += 180
+		if spotChild.get_child_count() > 0:
+			var c = spotChild.get_child(0)
+			spotChild.remove_child(c)
+			boxSide.add_child(c)
+			if spot == 3:
+				c.rotation_degrees.y -= 180
+				c.translation.z += .061
+			else:
+				c.translation.z += .061
 	get_parent().add_child(boxSide)
 
 	if _chippyAdded and _popForce < 2.0:
@@ -132,8 +150,6 @@ func setPopMessage(message = "Pop!"):
 			message = String(message)
 		_popMessage = message
 		
-		
-		
 		if !message.empty():
 			_popMessage = message
 			var p = get_parent()
@@ -143,6 +159,59 @@ func setPopMessage(message = "Pop!"):
 						self._messager = c
 						break
 		return self
+
+func setLabelColor(c : Color):
+	data["labelColor"] = c
+	emit_signal("labelColorChanged", c)
+
+func setSymbolColor(c : Color):
+	data["symbolColor"] = c
+	emit_signal("symbolColorChanged", c)
+
+func setSymbol(t : String):
+	if t.length() > 1:
+		t = t.substr(0,1)
+	data["symbol"] = t
+	
+	if !_symbolSet:
+		var l1; var l2
+		if data.has("symbolColor"):
+			l1 = BoxLabel.new(2, t, data["symbolColor"])
+			l2 = BoxLabel.new(4, t, data["symbolColor"])
+		else:
+			l1 = BoxLabel.new(2, t)
+			l2 = BoxLabel.new(4, t)
+		$"%Spot2".add_child(l1)
+		$"%Spot4".add_child(l2)
+		connect("symbolChanged",l1,"setText")
+		connect("symbolChanged",l2,"setText")
+		connect("symbolColorChanged",l1,"setColor")
+		connect("symbolColorChanged",l2,"setColor")
+		_symbolSet = true
+	else:
+		emit_signal("symbolChanged", t)
+
+
+func setLabel(t : String):
+	data["label"] = t
+
+	if !_labelSet:
+		var l1; var l2
+		if data.has("labelColor"):
+			l1 = BoxLabel.new(1, t, data["labelColor"])
+			l2 = BoxLabel.new(3, t, data["labelColor"])
+		else:
+			l1 = BoxLabel.new(1, t)
+			l2 = BoxLabel.new(3, t)
+		$"%Spot1".add_child(l1)
+		$"%Spot3".add_child(l2)
+		connect("labelChanged",l1,"setText")
+		connect("labelChanged",l2,"setText")
+		connect("labelColorChanged",l1,"setColor")
+		connect("labelColorChanged",l2,"setColor")
+		_labelSet = true
+	else:
+		emit_signal("labelChanged",t)
 
 func setCanOpen(canOpen : bool):
 	self._canOpen = canOpen

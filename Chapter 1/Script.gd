@@ -1,15 +1,11 @@
 extends Spatial
 
+ 
+
 
 # our main function
 func _ready():
 	createBox(0,0,0)
-
-
-
-
-
-
 
 
 
@@ -37,3 +33,10 @@ func createBox(x : float, y : float, z : float) -> Box:
 
 func mousePositionUpdated(mousePosition : Vector3):
 	pass
+
+
+
+
+
+
+

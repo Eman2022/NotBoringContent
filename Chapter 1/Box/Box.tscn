@@ -40,15 +40,19 @@ material/0 = SubResource( 3 )
 shape = SubResource( 1 )
 
 [node name="Spot1" type="Spatial" parent="."]
+unique_name_in_owner = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
 
 [node name="Spot2" type="Spatial" parent="."]
+unique_name_in_owner = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0 )
 
 [node name="Spot3" type="Spatial" parent="."]
+unique_name_in_owner = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5 )
 
 [node name="Spot4" type="Spatial" parent="."]
+unique_name_in_owner = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0 )
 
 [node name="Spot5" type="Spatial" parent="."]
