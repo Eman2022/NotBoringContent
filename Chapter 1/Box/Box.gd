@@ -168,7 +168,9 @@ func setSymbolColor(c : Color):
 	data["symbolColor"] = c
 	emit_signal("symbolColorChanged", c)
 
-func setSymbol(t : String):
+func setSymbol(t):
+	if !t is String:
+		t = String(t)
 	if t.length() > 1:
 		t = t.substr(0,1)
 	data["symbol"] = t
@@ -192,8 +194,11 @@ func setSymbol(t : String):
 		emit_signal("symbolChanged", t)
 
 
-func setLabel(t : String):
+func setLabel(t):
+	if !t is String:
+		t = String(t)
 	data["label"] = t
+
 
 	if !_labelSet:
 		var l1; var l2
