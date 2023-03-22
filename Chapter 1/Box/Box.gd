@@ -1,4 +1,10 @@
+# Published to gitlab by Erich_L 2023
+# Uh oh, you found my dumpster fire box code base! 
+# try not to look too close now!
+
 class_name Box extends RigidBody
+
+
 
 var boxSidesFile = preload("res://Chapter 1/Box/BoxSide.tscn")
 
@@ -12,9 +18,9 @@ signal labelColorChanged(c)
 var meshOffset : Vector3
 var _contents : Array 
 var boxName : String = "box"
-var worldNode
+var creatorNode : Spatial
 var _popMessage : String
-var _messager : Messager
+var _messenger : Messenger
 var _popForce : float = 1
 var _canOpen : bool = true
 var busyOpening := false
@@ -42,7 +48,7 @@ func _init():
 	setCanOpen(_canOpen)
 
 func _ready():
-	worldNode = get_parent()
+	creatorNode = get_parent()
 	if _autoPopTime > -1:
 		createSetPopTimer()
 
@@ -52,9 +58,10 @@ func _on_input_event(_camera, event, position, _normal, _shape_idx):
 		if !event.pressed:
 			popOpenBox()
 	elif event is InputEventMouseMotion:
-		worldNode.mousePositionUpdated(position)
-		if Globals.mouseDown:
-			popOpenBox()
+		if creatorNode.has_method("mousePositionUpdated"):
+			creatorNode.mousePositionUpdated(position)
+			if Globals.mouseDown:
+				popOpenBox()
 
 func popOpenBox():
 	if !busyOpening and _canOpen:
@@ -72,12 +79,12 @@ func popOpenBox():
 		for obj in _contents:
 			p.add_child(obj)
 			obj.transform = self.transform
-		if _popMessage and _messager:
-			_messager.updateText(_popMessage, self.translation)
-		elif _popMessage and !_messager:
+		if _popMessage and _messenger:
+			_messenger.updateText(_popMessage, self.translation)
+		elif _popMessage and !_messenger:
 			setPopMessage(_popMessage)
-			if _messager:
-				_messager.updateText(_popMessage, self.translation)
+			if _messenger:
+				_messenger.updateText(_popMessage, self.translation)
 			
 		if audioPlayer:
 			audioPlayer.transform = self.transform
@@ -140,9 +147,11 @@ func spawnBoxSide(spot : int, child : int):
 func setPopForce(force : float = 1.0):
 	if force:
 		self._popForce = force
+	return self
 
 func setPopApplyTorque(val : bool):
 	_applyPopTorque = val
+	return self
 
 func setPopMessage(message = "Pop!"):
 	if message:
@@ -150,29 +159,37 @@ func setPopMessage(message = "Pop!"):
 			message = String(message)
 		_popMessage = message
 		
-		if !message.empty():
-			_popMessage = message
-			var p = get_parent()
-			if p:
-				for c in p.get_children():
-					if c is Messager:
-						self._messager = c
-						break
-		return self
+		var c
+		for child in get_parent().get_children():
+			if child is Messenger:
+				c = child; break
+		if !c:
+			var pp = get_parent().get_parent()
+			if pp:
+				for child in pp.get_children():
+					if child is Messenger:
+						c = child; break
+		if c:
+			self._messenger = c
+	
+	return self
 
 func setLabelColor(c : Color):
 	data["labelColor"] = c
 	emit_signal("labelColorChanged", c)
+	return self
 
 func setSymbolColor(c : Color):
 	data["symbolColor"] = c
 	emit_signal("symbolColorChanged", c)
+	return self
 
 func setSymbol(t):
 	if !t is String:
 		t = String(t)
 	if t.length() > 1:
 		t = t.substr(0,1)
+		print_debug("Warning for box: setSymbol() takes only one character")
 	data["symbol"] = t
 	
 	if !_symbolSet:
@@ -192,14 +209,13 @@ func setSymbol(t):
 		_symbolSet = true
 	else:
 		emit_signal("symbolChanged", t)
+	return self
 
 
 func setLabel(t):
 	if !t is String:
 		t = String(t)
 	data["label"] = t
-
-
 	if !_labelSet:
 		var l1; var l2
 		if data.has("labelColor"):
@@ -217,6 +233,7 @@ func setLabel(t):
 		_labelSet = true
 	else:
 		emit_signal("labelChanged",t)
+	return self
 
 func setCanOpen(canOpen : bool):
 	self._canOpen = canOpen
@@ -231,6 +248,7 @@ func setCanOpen(canOpen : bool):
 func setCleanUpTime(timeSeconds : float):
 	if timeSeconds >= 0:
 		self._cleanUpTime = timeSeconds
+	return self
 
 func setAutoPop(timeSeconds : float):
 	if timeSeconds < 0:
@@ -238,6 +256,7 @@ func setAutoPop(timeSeconds : float):
 	self._autoPopTime = timeSeconds
 	if get_parent():
 		createSetPopTimer()
+	return self
 
 func createSetPopTimer():
 	var timer : Timer = Timer.new()
@@ -345,6 +364,7 @@ func setBoxHelium(amount : float):
 		var toRemove = _boxHelium + _boxOxygen - 100.0
 		setBoxOxygen(_boxOxygen - toRemove)
 	figureGravityScale()
+	return self
 
 func getBoxHelium() -> float:
 	return _boxHelium
@@ -359,6 +379,7 @@ func setBoxOxygen(amount : float):
 	if _boxHelium + _boxOxygen > 100:
 		var toRemove = _boxHelium + _boxOxygen - 100.0
 		setBoxHelium(_boxHelium - toRemove)
+	return self
 
 
 func addLightBallToBox(color : Color):
@@ -432,7 +453,6 @@ func setSizeOverride(size : float):
 	mesh.mesh.size = Vector3(1,1,1) * size
 	var collider : CollisionShape = get_node("CollisionShape")
 	collider.shape.extents = Vector3(0.5,0.5,0.5) * size
-
 
 
 func _on_tree_entered():

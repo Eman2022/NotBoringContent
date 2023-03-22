@@ -9,9 +9,6 @@ anchor_bottom = 1.0
 mouse_filter = 2
 input_pass_on_modal_close_click = false
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MiddleText" type="Label" parent="."]
 anchor_top = 0.5
@@ -23,9 +20,6 @@ custom_fonts/font = ExtResource( 2 )
 text = "hi buddy <3"
 align = 1
 valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MiddleTextTimer" type="Timer" parent="."]
 wait_time = 3.0
@@ -38,11 +32,16 @@ margin_bottom = 59.0
 custom_fonts/font = ExtResource( 2 )
 text = "yoooo!"
 align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="UpperTextTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
 autostart = true
+
+[node name="GridContainer" type="GridContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 497.0
+margin_top = -88.0
+margin_right = -399.0

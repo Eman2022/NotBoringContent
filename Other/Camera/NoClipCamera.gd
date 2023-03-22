@@ -46,9 +46,10 @@ func _input(event):
 		_mouse_position = event.relative
 	elif Input.is_action_just_pressed("rotateAboutOrigin"):
 		swapCameras()
-	elif Input.is_action_pressed("space"):
+	elif Input.is_action_pressed("captureMouse"):
 		mouseLock = !mouseLock
-		
+	elif Input.is_action_pressed("exit"):
+		get_tree().quit(0)
 	if mouseLock:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	else:

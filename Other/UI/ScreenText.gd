@@ -1,5 +1,7 @@
 class_name ScreenText extends Control
 
+# get this node to print some text to the screen using the setMiddleText and setUpperText functions
+
 
 func _ready():
 	$MiddleText.visible = false
@@ -27,3 +29,8 @@ func hideMiddleText():
 
 func hideUpperText():
 	$UpperText.visible = false
+
+func addUItoBottom(newNode : Control):
+	$GridContainer.add_child(newNode)
+
+

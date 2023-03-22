@@ -1,10 +1,10 @@
 extends StaticBody
 
-var worldNode
+var worldNode : Spatial
+
 
 func _ready():
 	worldNode = get_parent()
-
 
 func _on_body_entered(body):
 	if body is RigidBody:

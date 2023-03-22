@@ -1,4 +1,4 @@
-class_name Messager extends Spatial
+class_name Messenger extends Spatial
 
 
 export var label : NodePath
@@ -13,11 +13,9 @@ func updateText(text : String, pos : Vector3, seconds : float = 7.0):
 	if text and player and !text.empty() and get_node(label) is Label:
 		var l : Label = get_node(label)
 		l.text = text
-
 		self.visible = true
 		seconds -= timer.time_left
 		timer.start(seconds)
-
 		self.translation = pos
 
 func _on_timeout():
