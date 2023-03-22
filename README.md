@@ -2,6 +2,7 @@
 Not Boring Content is a Godot project designed to help students learn programming.
 
 MIT lisense for everything except pieces which I do not own: the background images and Chippy 3D model.
+![pyra](https://user-images.githubusercontent.com/42230060/227000078-3963f511-ca8d-4aa2-a2a3-ff72a3f0834f.jpg)
 
 
 How it works: learning revolves around using createBox(x,y,z) to create boxes that appear in the 3D space.
