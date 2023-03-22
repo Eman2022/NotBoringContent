@@ -15,3 +15,8 @@ https://www.youtube.com/watch?v=ykNda1-yf1Q
 
 Example 2: Understand recursion in programming
 https://www.youtube.com/watch?v=YoNPzu1XhXE
+
+
+See the Teacher_Examples node and attatched code to see a handful of examples of how to use.
+The theEveryThingExample() shows off a number of abilities the boxes have:
+![prr2](https://user-images.githubusercontent.com/42230060/227000765-fbf78dce-5d0c-4578-b592-6cdf327f5036.jpg)
